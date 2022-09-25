@@ -1,0 +1,21 @@
+{
+  "description": "Genesis token for House of Peregrine #2",
+  "external_url": "https://www.houseofperegrine.com/",
+  "animation_url": "https://www.houseofperegrine.com/fdd8cf8/videos/2.mp4",
+  "image": "https://www.houseofperegrine.com/fdd8cf8/images/2.png",
+  "name": "House of Peregrine Genesis NFT #2",
+  "attributes": [
+    {
+      "trait_type": "Base",
+      "value": "Star Dust"
+    },
+    {
+      "trait_type": "Blend",
+      "value": "Fog"
+    },
+    {
+      "trait_type": "Vision",
+      "value": "Laser"
+    }
+  ]
+}
