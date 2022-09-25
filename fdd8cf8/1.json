@@ -1,0 +1,21 @@
+{
+  "description": "Genesis token for House of Peregrine",
+  "external_url": "https://www.houseofperegrine.com/",
+  "animation_url": "https://www.houseofperegrine.com/fdd8cf8/videos/1.mp4",
+  "image": "https://www.houseofperegrine.com/fdd8cf8/images/1.png",
+  "name": "Mickell's NFT",
+  "attributes": [
+    {
+      "trait_type": "Base",
+      "value": "fluffy-brick"
+    },
+    {
+      "trait_type": "Blend",
+      "value": "Burn"
+    },
+    {
+      "trait_type": "Vision",
+      "value": "Laser"
+    }
+  ]
+}
