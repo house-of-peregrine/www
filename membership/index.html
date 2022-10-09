@@ -179,12 +179,11 @@ Early access to collabs Membership for life Free yearly NFT drop Private Discord
 </template>
 
 <script>
+  const lockContract = "0xF2599446349e02C3790caa5520a3FDd235f0d78D";
   window.unlockProtocolConfig = {
     network: 5,
     locks: {
       "0xF2599446349e02C3790caa5520a3FDd235f0d78D": {
-        
-        
         network: 5,
         name: "House of Peregrine Genesis",
       },
@@ -213,7 +212,7 @@ Early access to collabs Membership for life Free yearly NFT drop Private Discord
       operationName: null,
       variables: {},
       query: `{
-    keys(where: {owner: "${owner}", lock: "0x558b3e04d824bfeced699fd530d6910c06b09442"}) {
+    keys(where: {owner: "${owner}", lock: "${lockContract.toLowerCase()}"}) {
       id
       lock {
         id
