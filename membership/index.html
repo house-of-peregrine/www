@@ -234,10 +234,12 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
 <script>
   const lockContract = "0xe931fbe75b69d1c7abe2bbbd10449b01a8abe82b";
   window.unlockProtocolConfig = {
-    network: 5,
+    network: 1,
+    
     locks: {
       "0xe931fbe75b69d1c7abe2bbbd10449b01a8abe82b": {
-        network: 5,
+        network: 1,
+        
         name: "HOP Genesis",
       },
     },
@@ -259,7 +261,34 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
 
   
 
-  async function getTokenIDsForOwner(owner) {
+  async function getTokenIDsForOwnerV1(owner) {
+    
+    const query = {
+      operationName: null,
+      variables: {},
+      query: `{
+    keys(where: {owner: "${owner}", lock: "${lockContract.toLowerCase()}"}) {
+      id
+      lock {
+        id
+      }
+      keyId
+      tokenURI
+    }
+  }`,
+    };
+
+    const response = await fetch(
+      "https://api.thegraph.com/subgraphs/name/unlock-protocol/unlock",
+      {
+        method: "POST", 
+        body: JSON.stringify(query),
+      }
+    );
+    return response.json();
+  }
+
+  async function getTokenIDsForOwnerV2(owner) {
     
     const query = {
       operationName: null,
@@ -279,7 +308,7 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
     };
 
     const response = await fetch(
-      "https://api.thegraph.com/subgraphs/name/unlock-protocol/unlock-v2",
+      "https://api.thegraph.com/subgraphs/name/unlock-protocol/goerli-v2",
       {
         method: "POST", 
         body: JSON.stringify(query),
@@ -343,7 +372,7 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
         let holder = document.getElementById("holder");
         let top = true;
         holder.textContent = ""; 
-        getTokenIDsForOwner(unlockProtocol.getUserAccountAddress()).then(
+        getTokenIDsForOwnerV1(unlockProtocol.getUserAccountAddress()).then(
           (resp) => {
             resp?.data?.keys?.forEach(({ tokenId, tokenURI }) => {
               getMetadata(tokenId).then(
