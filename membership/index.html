@@ -267,7 +267,7 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
       operationName: null,
       variables: {},
       query: `{
-    keys(where: {owner: "${owner}", lock: "${lockContract.toLowerCase()}"}) {
+    keys(where: {owner: "${owner.toLowerCase()}", lock: "${lockContract.toLowerCase()}"}) {
       id
       lock {
         id
@@ -294,7 +294,7 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
       operationName: null,
       variables: {},
       query: `{
-    keys(where: {owner: "${owner}", lock: "${lockContract.toLowerCase()}"}) {
+    keys(where: {owner: "${owner.toLowerCase()}", lock: "${lockContract.toLowerCase()}"}) {
       id
       lock {
         id
@@ -374,7 +374,8 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
         holder.textContent = ""; 
         getTokenIDsForOwnerV1(unlockProtocol.getUserAccountAddress()).then(
           (resp) => {
-            resp?.data?.keys?.forEach(({ tokenId, tokenURI }) => {
+            resp?.data?.keys?.forEach(({ keyId, tokenURI }) => {
+              const tokenId = keyId;
               getMetadata(tokenId).then(
                 ({ name, image, animation_url, attributes }) => {
                   let template = document.getElementById("my-content");
@@ -386,8 +387,14 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
 
                   
                   let video = content.querySelectorAll("video")[0];
-                  video.src = animation_url;
-                  video.poster = image;
+                  video.src = animation_url.replace(
+                    "ipfs:/",
+                    "https://house-of-peregrine.mypinata.cloud/ipfs"
+                  );
+                  video.poster = image.replace(
+                    "ipfs:/",
+                    "https://house-of-peregrine.mypinata.cloud/ipfs"
+                  );
 
                   
                   let attrs = extractAttributes(attributes);
