@@ -2,18 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/categories/</loc>
+    <loc>/apply_now/</loc>
   </url><url>
-    <loc>/membership/</loc>
+    <loc>/categories/</loc>
   </url><url>
     <loc>/</loc>
   </url><url>
     <loc>/marketplace/</loc>
   </url><url>
+    <loc>/membership/</loc>
+  </url><url>
     <loc>/roadmap/</loc>
   </url><url>
     <loc>/tags/</loc>
   </url><url>
-    <loc>/why_web3/</loc>
+    <loc>/web3/</loc>
   </url>
 </urlset>
