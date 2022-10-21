@@ -236,14 +236,15 @@ story with intention."/>
 <template id="poap-template">
   <h2 class="mt6">Event Poap</h2>
   <p>
-    <img id="poster" />
+    <img id="poster" class="br3 w-100" />
   </p>
   <p id="description" class="mb6"></p>
 </template>
 
 <script>
   const lockContract = "0xe931fbe75b69d1c7abe2bbbd10449b01a8abe82b",
-    poapContract = "0x819f8be5f408def180fd526b9ab2aa90717102dd",
+    poemContract = "0x819f8be5f408def180fd526b9ab2aa90717102dd",
+    poapContract = "0x0f16f58046d3cdf1d994573d4b06e98950c81a11",
     ipfsGateway = "https://house-of-peregrine.mypinata.cloud/ipfs",
     subgraphBase = "https://api.thegraph.com/subgraphs/name/unlock-protocol";
 
@@ -299,30 +300,37 @@ story with intention."/>
     return response.json();
   }
 
-  async function getTokenIDsForOwnerV2(owner, contract, network) {
+  async function getTokenIDsForOwnerV2(owner, contracts, network) {
     
-    const query = {
-      operationName: null,
-      variables: {},
-      query: `{
-    keys(where: {owner: "${owner.toLowerCase()}", lock: "${contract.toLowerCase()}"}) {
-      id
-      lock {
-        id
-      }
-      tokenId
-      tokenURI
-      owner
-      cancelled
-    }
-  }`,
-    };
 
-    const response = await fetch(`${subgraphBase}/${network}`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      body: JSON.stringify(query),
-    });
-    return response.json();
+    let results = { data: { keys: [] } };
+    for (let i = 0; i < contracts.length; i++) {
+      const contract = contracts[i];
+      const query = {
+        operationName: null,
+        variables: {},
+        query: `{
+      keys(where: {owner: "${owner.toLowerCase()}", lock: "${contract.toLowerCase()}"}) {
+        id
+        lock {
+          id
+        }
+        tokenId
+        tokenURI
+        owner
+        cancelled
+      }
+    }`,
+      };
+
+      const out = await fetch(`${subgraphBase}/${network}`, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        body: JSON.stringify(query),
+      }).then((resp) => resp.json());
+      results.data.keys = [...results.data.keys, ...out?.data?.keys]; 
+    }
+
+    return results;
   }
 
   async function getMetadata(tokenID, tokenURI) {
@@ -397,13 +405,19 @@ story with intention."/>
 
   async function loadPoap(holder, { tokenId, tokenURI }) {
     const { name, image, description } = await getMetadata(tokenId, tokenURI);
-    console.log("name", name, "image", image);
     const template = document.getElementById("poap-template");
     const content = template.content.cloneNode(true);
 
     
     const title = content.querySelectorAll("h2")[0];
+    
     title.textContent = "52°22'08.9\"N 4°52'51.1\"E";
+    if (
+      tokenURI ==
+      "https://locksmith.unlock-protocol.com/api/key/137/0x0f16f58046d3cdf1d994573d4b06e98950c81a11/1"
+    ) {
+      title.textContent = "HOP x Laser 3.14 Event";
+    }
 
     
     const poster = content.getElementById("poster");
@@ -411,7 +425,16 @@ story with intention."/>
 
     
     const desc = content.getElementById("description");
-    desc.textContent = description;
+    
+    desc.textContent =
+      '"Now is when we bloom". On the street in Amsterdam. Created August 14th 2022';
+    if (
+      tokenURI ==
+      "https://locksmith.unlock-protocol.com/api/key/137/0x0f16f58046d3cdf1d994573d4b06e98950c81a11/1"
+    ) {
+      desc.textContent =
+        "Original spray can top used by Laser 3.14 and made into a keychain.";
+    }
 
     holder.appendChild(content);
   }
@@ -455,7 +478,7 @@ story with intention."/>
         
         resp = await getTokenIDsForOwnerV2(
           unlockProtocol.getUserAccountAddress(),
-          poapContract,
+          [poemContract, poapContract],
           "polygon-v2"
         );
         if (resp?.data?.keys?.length > 0) {
