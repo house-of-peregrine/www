@@ -1,0 +1,16 @@
+{
+  "name": "52°22'08.0\"N 4°52'51.1\"E",
+  "description": "\"Now is when we bloom\". On the street in Amsterdam. Created August 14th 2022",
+  "external_url": "https://www.houseofperegrine.com/",
+  "image": "ipfs://QmZvqFax6a3Pw82kgFbuviDi78dwwFhtEvM6MutyJtPh43",
+  "attributes": [
+    {
+      "trait_type": "Latitude",
+      "value": "52.3691333"
+    },
+    {
+      "trait_type": "Longitude",
+      "value": "4.8808600"
+    }
+  ]
+}
