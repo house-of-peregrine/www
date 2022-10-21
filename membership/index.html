@@ -7,13 +7,11 @@
     <title>Membership | House of Peregrine</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="description" content="By invitation or nomination Genesis members are mercenaries in their pursuits and want to dive further into web3. Counted among us are artists, venture capitalists, parents & established executives across all industries and nations. 200 memberships @ .25 ETH By application or nomination.
-Apply Now “Now
+Apply Now Proof of Attendance Collectables You haven&#39;t attended any Events yet.
+“Now
 Is When We Bloom” A mantra for those that
 craft their life
-story with intention. It’s now.
-Original Location
-52.3691333, 4.8808600
-Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:">
+story with intention.">
     <meta name="generator" content="Hugo 0.101.0" />
     
     
@@ -64,13 +62,11 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:">
     
     <meta property="og:title" content="Membership" />
 <meta property="og:description" content="By invitation or nomination Genesis members are mercenaries in their pursuits and want to dive further into web3. Counted among us are artists, venture capitalists, parents & established executives across all industries and nations. 200 memberships @ .25 ETH By application or nomination.
-Apply Now “Now
+Apply Now Proof of Attendance Collectables You haven&#39;t attended any Events yet.
+“Now
 Is When We Bloom” A mantra for those that
 craft their life
-story with intention. It’s now.
-Original Location
-52.3691333, 4.8808600
-Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:" />
+story with intention." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/membership/" /><meta property="article:section" content="" />
 
@@ -78,25 +74,21 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:" />
 
 <meta itemprop="name" content="Membership">
 <meta itemprop="description" content="By invitation or nomination Genesis members are mercenaries in their pursuits and want to dive further into web3. Counted among us are artists, venture capitalists, parents & established executives across all industries and nations. 200 memberships @ .25 ETH By application or nomination.
-Apply Now “Now
+Apply Now Proof of Attendance Collectables You haven&#39;t attended any Events yet.
+“Now
 Is When We Bloom” A mantra for those that
 craft their life
-story with intention. It’s now.
-Original Location
-52.3691333, 4.8808600
-Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:">
+story with intention.">
 
-<meta itemprop="wordCount" content="97">
+<meta itemprop="wordCount" content="109">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Membership"/>
 <meta name="twitter:description" content="By invitation or nomination Genesis members are mercenaries in their pursuits and want to dive further into web3. Counted among us are artists, venture capitalists, parents & established executives across all industries and nations. 200 memberships @ .25 ETH By application or nomination.
-Apply Now “Now
+Apply Now Proof of Attendance Collectables You haven&#39;t attended any Events yet.
+“Now
 Is When We Bloom” A mantra for those that
 craft their life
-story with intention. It’s now.
-Original Location
-52.3691333, 4.8808600
-Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
+story with intention."/>
 
 	
   </head>
@@ -174,7 +166,7 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
         </h1>
       </header>
       <div class="nested-copy-line-height lh-copy f4 nested-links white">
-        <div id="holder">
+        <div id="membership-holder">
   <p>
     By invitation or nomination Genesis members are mercenaries in their
     pursuits and want to dive further into web3.
@@ -196,7 +188,12 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
   </p>
 </div>
 
-<template id="my-content">
+<h1>Proof of Attendance Collectables</h1>
+<div id="poap-holder">
+  <p class="mb6">You haven't attended any Events yet.</p>
+</div>
+
+<template id="membership-template">
   <div id="top">
     <p class="tc">
       “Now<br />
@@ -236,9 +233,20 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
     </div>
   </div>
 </template>
+<template id="poap-template">
+  <h2 class="mt6">Event Poap</h2>
+  <p>
+    <img id="poster" />
+  </p>
+  <p id="description" class="mb6"></p>
+</template>
 
 <script>
-  const lockContract = "0xe931fbe75b69d1c7abe2bbbd10449b01a8abe82b";
+  const lockContract = "0xe931fbe75b69d1c7abe2bbbd10449b01a8abe82b",
+    poapContract = "0x819f8be5f408def180fd526b9ab2aa90717102dd",
+    ipfsGateway = "https://house-of-peregrine.mypinata.cloud/ipfs",
+    subgraphBase = "https://api.thegraph.com/subgraphs/name/unlock-protocol";
+
   window.unlockProtocolConfig = {
     network: 1,
     
@@ -267,13 +275,13 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
 
   
 
-  async function getTokenIDsForOwnerV1(owner) {
+  async function getTokenIDsForOwnerV1(owner, contract, network) {
     
     const query = {
       operationName: null,
       variables: {},
       query: `{
-    keys(where: {owner: "${owner.toLowerCase()}", lock: "${lockContract.toLowerCase()}"}) {
+    keys(where: {owner: "${owner.toLowerCase()}", lock: "${contract.toLowerCase()}"}) {
       id
       lock {
         id
@@ -284,23 +292,20 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
   }`,
     };
 
-    const response = await fetch(
-      "https://api.thegraph.com/subgraphs/name/unlock-protocol/unlock",
-      {
-        method: "POST", 
-        body: JSON.stringify(query),
-      }
-    );
+    const response = await fetch(`${subgraphBase}/${network}`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      body: JSON.stringify(query),
+    });
     return response.json();
   }
 
-  async function getTokenIDsForOwnerV2(owner) {
+  async function getTokenIDsForOwnerV2(owner, contract, network) {
     
     const query = {
       operationName: null,
       variables: {},
       query: `{
-    keys(where: {owner: "${owner.toLowerCase()}", lock: "${lockContract.toLowerCase()}"}) {
+    keys(where: {owner: "${owner.toLowerCase()}", lock: "${contract.toLowerCase()}"}) {
       id
       lock {
         id
@@ -313,18 +318,15 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
   }`,
     };
 
-    const response = await fetch(
-      "https://api.thegraph.com/subgraphs/name/unlock-protocol/goerli-v2",
-      {
-        method: "POST", 
-        body: JSON.stringify(query),
-      }
-    );
+    const response = await fetch(`${subgraphBase}/${network}`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      body: JSON.stringify(query),
+    });
     return response.json();
   }
 
-  async function getMetadata(tokenID) {
-    const response = await fetch(`${baseURL}/${tokenID}`);
+  async function getMetadata(tokenID, tokenURI) {
+    const response = await fetch(tokenURI);
     return response.json();
   }
 
@@ -356,8 +358,66 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
     return struct;
   }
 
+  async function loadToken(holder, { keyId, tokenURI }) {
+    const tokenId = keyId;
+    
+    const { name, image, animation_url, attributes } = await getMetadata(
+      tokenId,
+      `${baseURL}/${tokenId}`
+    );
+    const template = document.getElementById("membership-template");
+    const content = template.content.cloneNode(true);
+
+    // title
+    const title = content.querySelectorAll("h2")[0];
+    title.textContent = name;
+
+    
+    const video = content.querySelectorAll("video")[0];
+    video.src = animation_url.replace("ipfs:/", ipfsGateway);
+    video.poster = image.replace("ipfs:/", ipfsGateway);
+
+    
+    const attrs = extractAttributes(attributes);
+    el = content.getElementById("canvas");
+    el.textContent = attrs.canvas;
+    el = content.getElementById("blend");
+    el.textContent = attrs.blend;
+    el = content.getElementById("vision");
+    el.textContent = attrs.vision;
+
+    if (!top) {
+      el = content.getElementById("top");
+      el.textContent = "";
+    }
+
+    holder.appendChild(content);
+    top = false;
+  }
+
+  async function loadPoap(holder, { tokenId, tokenURI }) {
+    const { name, image, description } = await getMetadata(tokenId, tokenURI);
+    console.log("name", name, "image", image);
+    const template = document.getElementById("poap-template");
+    const content = template.content.cloneNode(true);
+
+    
+    const title = content.querySelectorAll("h2")[0];
+    title.textContent = "52°22'08.9\"N 4°52'51.1\"E";
+
+    
+    const poster = content.getElementById("poster");
+    poster.src = image.replace("ipfs:/", ipfsGateway);
+
+    
+    const desc = content.getElementById("description");
+    desc.textContent = description;
+
+    holder.appendChild(content);
+  }
+
   (function () {
-    // Set a few default variables.
+    
     let isUnlocked = true;
     let isChecked = false;
 
@@ -368,64 +428,40 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
     }, 2000);
 
     window.addEventListener("unlockProtocol.authenticated", function (e) {
-      console.log("authenticated", e);
+      
     });
 
-    window.addEventListener("unlockProtocol.status", function (e) {
+    window.addEventListener("unlockProtocol.status", async function (e) {
       let unlock = e.detail;
       isChecked = true;
       isUnlocked = unlock.state === "unlocked";
-      console.log("status", unlock);
 
       if (isUnlocked) {
-        let holder = document.getElementById("holder");
+        let membership_holder = document.getElementById("membership-holder");
+        let poap_holder = document.getElementById("poap-holder");
         let top = true;
-        holder.textContent = ""; 
-        getTokenIDsForOwnerV1(unlockProtocol.getUserAccountAddress()).then(
-          (resp) => {
-            resp?.data?.keys?.forEach(({ keyId, tokenURI }) => {
-              const tokenId = keyId;
-              getMetadata(tokenId).then(
-                ({ name, image, animation_url, attributes }) => {
-                  let template = document.getElementById("my-content");
-                  let content = template.content.cloneNode(true);
+        membership_holder.textContent = ""; 
 
-                  
-                  let title = content.querySelectorAll("h2")[0];
-                  title.textContent = name;
-
-                  
-                  let video = content.querySelectorAll("video")[0];
-                  video.src = animation_url.replace(
-                    "ipfs:/",
-                    "https://house-of-peregrine.mypinata.cloud/ipfs"
-                  );
-                  video.poster = image.replace(
-                    "ipfs:/",
-                    "https://house-of-peregrine.mypinata.cloud/ipfs"
-                  );
-
-                  
-                  let attrs = extractAttributes(attributes);
-                  let el = content.getElementById("canvas");
-                  el.textContent = attrs.canvas;
-                  el = content.getElementById("blend");
-                  el.textContent = attrs.blend;
-                  el = content.getElementById("vision");
-                  el.textContent = attrs.vision;
-
-                  if (!top) {
-                    el = content.getElementById("top");
-                    el.textContent = "";
-                  }
-
-                  holder.appendChild(content);
-                  top = false;
-                }
-              );
-            });
-          }
+        
+        let resp = await getTokenIDsForOwnerV1(
+          unlockProtocol.getUserAccountAddress(),
+          lockContract,
+          "unlock"
         );
+        resp?.data?.keys?.forEach((token) =>
+          loadToken(membership_holder, token)
+        );
+
+        
+        resp = await getTokenIDsForOwnerV2(
+          unlockProtocol.getUserAccountAddress(),
+          poapContract,
+          "polygon-v2"
+        );
+        if (resp?.data?.keys?.length > 0) {
+          poap_holder.textContent = ""; 
+          resp.data.keys.forEach((poap) => loadPoap(poap_holder, poap));
+        }
       } else {
         
         unlockProtocol.loadCheckoutModal();
@@ -433,7 +469,7 @@ Amsterdam Your NFT Base Effect Vision hi Genesis Benefits:"/>
     });
 
     window.addEventListener("load", function (e) {
-      console.log("onLoad", unlockProtocol.getUserAccountAddress());
+      
       if (!isUnlocked) {
         
         unlockProtocol.loadCheckoutModal();
