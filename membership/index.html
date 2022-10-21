@@ -412,12 +412,6 @@ story with intention."/>
     const title = content.querySelectorAll("h2")[0];
     
     title.textContent = "52°22'08.9\"N 4°52'51.1\"E";
-    if (
-      tokenURI ==
-      "https://locksmith.unlock-protocol.com/api/key/137/0x0f16f58046d3cdf1d994573d4b06e98950c81a11/1"
-    ) {
-      title.textContent = "HOP x Laser 3.14 Event";
-    }
 
     
     const poster = content.getElementById("poster");
@@ -428,10 +422,9 @@ story with intention."/>
     
     desc.textContent =
       '"Now is when we bloom". On the street in Amsterdam. Created August 14th 2022';
-    if (
-      tokenURI ==
-      "https://locksmith.unlock-protocol.com/api/key/137/0x0f16f58046d3cdf1d994573d4b06e98950c81a11/1"
-    ) {
+
+    if (tokenURI.indexOf("2350ba") !== -1) {
+      title.textContent = "HOP x Laser 3.14 Event";
       desc.textContent =
         "Original spray can top used by Laser 3.14 and made into a keychain.";
     }
