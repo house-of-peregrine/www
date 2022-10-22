@@ -47,6 +47,10 @@ story with intention.">
   .nested-links a {
     color: white;
   }
+
+  img {
+    border-radius: 0.5em;
+  }
 </style>
 
     
@@ -98,7 +102,7 @@ story with intention."/>
     
 
   
-  <header class="cover bg-top" style="background-image: url('/images/DSC09137_De_Dusted&#43;BWjpg_Darkened.jpg');">
+  <header class="cover bg-top" style="background-image: url('/images/DSC09180_De_Dusted&#43;BWjpg_Darkened.jpg');">
     
   <div class="w3 h4" style="background-color: #f1dd47; position: absolute; top: 19rem; left: 8rem;"></div>
 
@@ -133,6 +137,12 @@ story with intention."/>
           <li class="bl ph3 white-90 list f5 f4-ns fw4 dib pr3">
             <a class="hover-white no-underline white-90" href="/web3/" title="Web3 page">
               Web3
+            </a>
+          </li>
+          
+          <li class="bl ph3 white-90 list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/journal/" title="Journal page">
+              Journal
             </a>
           </li>
           
@@ -423,7 +433,7 @@ story with intention."/>
     desc.textContent =
       '"Now is when we bloom". On the street in Amsterdam. Created August 14th 2022';
 
-    if (tokenURI.indexOf("2350ba") !== -1) {
+    if (tokenURI.indexOf("2350ba") !== -1 || tokenURI.indexOf(poapContract) !== -1) {
       title.textContent = "HOP x Laser 3.14 Event";
       desc.textContent =
         "Original spray can top used by Laser 3.14 and made into a keychain.";
