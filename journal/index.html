@@ -156,7 +156,92 @@
         </h1>
       </header>
       <div class="nested-copy-line-height lh-copy f4 nested-links white">
-        <p><img src="/images/On-the-street-Now-Is-When-We-Bloom.jpeg" alt="Poem on the street"></p>
+        <script>
+  const lockContract = "0xe931fbe75b69d1c7abe2bbbd10449b01a8abe82b";
+  
+  window.unlockProtocolConfig = {
+    network: 4,
+    locks: {
+      "0xe931fbe75b69d1c7abe2bbbd10449b01a8abe82b": {
+        network: 1,
+        name: "House of Peregrine membership",
+      },
+    },
+    callToAction: {
+      default: "Become a member to access the rest!",
+    },
+    pessimistic: true,
+  };
+
+  (function (d, s) {
+    var js = d.createElement(s),
+      sc = d.getElementsByTagName(s)[0];
+    js.src = "https://paywall.unlock-protocol.com/static/unlock.latest.min.js";
+    sc.parentNode.insertBefore(js, sc);
+  })(document, "script");
+
+  (function () {
+    
+    let isUnlocked = true;
+    const previewTime = 30;
+    let gateAdded = false;
+
+    window.addEventListener("load", function (e) {
+      
+      if (!isUnlocked) {
+        
+        
+      }
+    });
+
+    window.addEventListener("unlockProtocol.status", function (e) {
+      var unlock = e.detail;
+      isUnlocked = unlock.state === "unlocked";
+      console.log("status", isUnlocked);
+      
+
+      if (!isUnlocked) {
+        if (!gateAdded) {
+          gateAdded = true;
+          const article = document.querySelector("article > div");
+          article.style =
+            "position: relative; overflow: hidden; height: 800px;";
+
+          const div = document.createElement("div");
+          div.textContent = " ";
+          div.className = "gate";
+          div.style =
+            "position: absolute; bottom: 0; width: 100%; height: 10em; background: linear-gradient(rgba(253, 250, 247, 0), rgb(0, 0, 0) 70%);";
+          article.appendChild(div);
+
+          const btn = document.createElement("button");
+          btn.textContent = "Connect Wallet";
+          btn.className =
+            "gate f3 link dim br-pill ph3 pv2 mb2 dib white bg-mid-gray";
+          btn.style = "display: block; margin: auto; border: 1px solid white;";
+          btn.addEventListener("click", (e) => {
+            unlockProtocol.loadCheckoutModal();
+          });
+          article.parentNode.appendChild(btn);
+
+          console.log(window.unlockProtocol);
+          
+        }
+      } else {
+        if (gateAdded) {
+          const gates = document.querySelectorAll(".gate");
+          for (const el of gates) {
+            el.parentNode.removeChild(el);
+          }
+          const article = document.querySelector("article > div");
+          article.style = "";
+        }
+      }
+    });
+  })();
+</script>
+
+<p><img src="/images/On-the-street-Now-Is-When-We-Bloom.jpeg" alt="Poem on the street"></p>
 <p>“Bloom where you are planted.” It always hit out of nowhere when I received this as a response. It was 2015 and I was really not coping well with what I saw was a completely bizarre acceptance of normal life in the only place I had called home and wondered if I was the only one seeing it. I heard it over and over in different forms-a warning to keep my head down and feel grateful for all I have.  I have to admit  it took me way too long to realize that dream lives come in all shapes and sizes.
 It was clear: where I was planted was not for me.</p>
 <p>I adore that Laser has delightfully given it the middle finger(or at least a playful “nope”!) as I feel that those who can relate, well, those are our people. Where we bloom is on our terms, in our determination, and not a moment before and definitely not in unfit soil.  To bloom is perhaps a inevitable process, but the place, the moment and the environment for us, in this moment, with these kindreds? ”It’s now.”</p>
