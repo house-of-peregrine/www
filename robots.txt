@@ -1,5 +1,6 @@
 User-agent: *
-# robotstxt.org - if ENV production variable is false robots will be disallowed.
 
-Disallow: /
-
+Disallow: /2350ba/
+Disallow: /75394c/
+Disallow: /de4085/
+Disallow: /fdd8cf8//
