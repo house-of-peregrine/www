@@ -3,4 +3,4 @@ User-agent: *
 Disallow: /2350ba/
 Disallow: /75394c/
 Disallow: /de4085/
-Disallow: /fdd8cf8//
+Disallow: /fdd8cf8/
