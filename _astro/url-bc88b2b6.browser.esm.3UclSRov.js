@@ -1,0 +1,1 @@
+import{ah as r}from"./Login.FOoZKC81.js";function i(e){const t=new URL(e).hostname;return t.endsWith(".thirdweb.com")||t==="localhost"||t==="0.0.0.0"}function o(e){return r(e).map(t=>{try{const n=new URL(t);return n.hostname.endsWith(".thirdweb.com")&&(n.pathname="",n.search=""),n.toString()}catch{return t}})}export{o as g,i};

@@ -1,0 +1,10 @@
+import{G as d}from"./tokens.VZm6ve4Q.js";import{S as E}from"./urls.k52fqfOX.js";const l="tkngate",r="tkninfo",s="tknacnt";function S(e){return"detail"in e}function w(e){return"detail"in e}function h(e){return t=>{const n=localStorage.getItem(r)||0;if(t&&t.detail&&t.detail==n)return e(t)}}async function k(e,t,n){const o={operationName:null,variables:{},query:`{
+				keys(where: {owner: "${e.toLowerCase()}", lock: "${t.toLowerCase()}"}) {
+					id
+					lock {
+						id
+					}
+					keyId
+					tokenURI
+				}
+			}`};return(await fetch(`${E}/${n}`,{method:"POST",body:JSON.stringify(o)})).json()}const y=e=>{let t;return(...n)=>{t&&cancelAnimationFrame(t),t=requestAnimationFrame(()=>{e(...n)})}},u=()=>{document.documentElement.dataset.scroll=`${window.scrollY}`};document.addEventListener("scroll",y(u),{passive:!0});let c;function m(){c===void 0&&(c=document.getElementsByTagName("body")[0]),c.classList.toggle("loggedin")}async function I(e){const t=localStorage.getItem(l),n=localStorage.getItem(s);if(t!=null&&t!=null&&t==d&&n==e){const a=localStorage.getItem(r);document.dispatchEvent(new CustomEvent("ungate",{detail:a}));return}g(),(await k(e,d,"unlock"))?.data?.keys?.forEach(a=>{let i=(Math.random()+1).toString(36).substring(2);localStorage.setItem(r,i),localStorage.setItem(l,a.lock.id),localStorage.setItem(s,e),document.dispatchEvent(new CustomEvent("ungate",{detail:i}))})}function g(){localStorage.removeItem(r),localStorage.removeItem(l),localStorage.removeItem(s),document.dispatchEvent(new CustomEvent("gate"))}function f(e){if(!S(e))throw new Error("not a StringDetailEvent");m(),I(e.detail)}document.addEventListener("login",f);document.addEventListener("switch",f);document.addEventListener("logout",()=>{m(),g()});function v(e){if(!w(e))throw new Error("not a custom event");const t=document.querySelectorAll(".menu .gated");let n=o=>o.remove("show");h(o=>{o.detail&&(n=a=>a.add("show"))})(e);for(const o of t)n(o.classList)}document.addEventListener("ungate",v);document.addEventListener("gate",v);u();const p=document.querySelector("#burger"),L=document.querySelectorAll("#menu-overlay");L.forEach(e=>{e.addEventListener("click",()=>p.checked=!1)});
